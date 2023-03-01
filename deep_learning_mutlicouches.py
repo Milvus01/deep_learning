@@ -1,3 +1,4 @@
+from time import time
 import matplotlib.pyplot as plt
 import numpy as np
 import h5py
@@ -49,14 +50,14 @@ def neural_network(X_train, y_train, hidden_layers=(32, 32, 32), learning_rate=0
         if i % 100 == 0:
             c = len(parameters) // 2
             train_loss.append(log_loss(y_train, activations['A' + str(c)]))
-            y_pred = predict(X_train, parameters)
-            train_acc.append(accuracy_score(y_train.flatten(), y_pred.flatten()))
-    plt.figure(figsize=(12, 4))
-    plt.subplot(1, 2, 1)
-    plt.plot(train_loss, label='train loss') ; plt.legend()
-    plt.subplot(1, 2, 2)
-    plt.plot(train_acc, label='train acc') ; plt.legend()
-    plt.show()
+            # y_pred = predict(X_train, parameters)
+            # train_acc.append(accuracy_score(y_train.flatten(), y_pred.flatten()))
+    # plt.figure(figsize=(12, 4))
+    # plt.subplot(1, 2, 1)
+    # plt.plot(train_loss, label='train loss') ; plt.legend()
+    # plt.subplot(1, 2, 2)
+    # plt.plot(train_acc, label='train acc') ; plt.legend()
+    # plt.show()
     return parameters
 
 def predict(X, parameters):
@@ -81,14 +82,15 @@ log_loss = lambda y, activations, epsilon=1e-15 : 1 / len(y) * np.sum(-y * np.lo
 # X_train = X_train.reshape(X_train.shape[0], -1) / X_train.max()
 # X_test = X_test.reshape(X_test.shape[0], -1) / X_train.max()
 # parameters = neural_network(X_train, y_train, learning_rate=0.01)
-
+temp1 = time()
 X, y = make_circles(n_samples=100, noise=0.1, factor=0.3)
 X = X.T
 y = y.reshape((1, y.shape[0]))
-plt.scatter(X[0, :], X[1, :], c=y, cmap='summer') ; plt.show()
+# plt.scatter(X[0, :], X[1, :], c=y, cmap='summer') ; plt.show()
 
 parameters = neural_network(X, y, hidden_layers=(32, 32, 32), n_iter=10000, learning_rate=0.1)
-
+temp2 = time()
+print(temp2 - temp1)
 
 # parameters = { 'W1', 'b1', 'W2', 'b2' }
 # activations = { 'A1', 'A2' }
